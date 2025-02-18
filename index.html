@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Hub</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #000000;
+            color: #00ff00; /* 緑色のテキスト */
+        }
+        header, footer {
+            background-color: #1a1a1a;
+            color: #00ff00; /* 緑色のテキスト */
+            text-align: center;
+            padding: 1em;
+            position: sticky;
+            top: 0;
+            width: 100%;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.3); /* 緑色のシャドウ */
+        }
+        header a {
+            color: #00ff00; /* 緑色のリンク */
+            text-decoration: none;
+            text-shadow: 0 0 5px #00ff00; /* 緑色のグロー */
+        }
+        header a:hover {
+            text-shadow: 0 0 10px #00ff00; /* 緑色のホバー時のグロー */
+        }
+        .green-text {
+            color: #00ff00; /* 緑色のテキスト */
+        }
+        nav ul {
+            list-style-type: none;
+            padding: 0;
+            background-color: #333;
+            display: flex;
+            justify-content: center;
+            margin: 0;
+        }
+        nav ul li {
+            margin: 0 5px;
+        }
+        nav ul li a {
+            color: #00ff00; /* 緑色のリンク */
+            text-decoration: none;
+            padding: 0.5em;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        nav ul li a:hover {
+            background-color: #444;
+        }
+        main {
+            padding: 1em;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            gap: 2em;
+            height: 100vh; /* Full viewport height */
+            align-items: center; /* Center buttons vertically */
+            background: url('https://www.transparenttextures.com/patterns/asfalt-light.png'); /* ハッカー風の背景 */
+            background-color: #000; /* ブラックの背景色 */
+        }
+        .play-btn {
+            display: inline-block;
+            padding: 1em 2em;
+            background-color: #00ff00; /* 緑色のボタン */
+            color: #000000;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .play-btn:hover {
+            background-color: #33cc33;
+        }
+        footer p {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Game Hub</h1>
+        <h4>This is also saved to <a href="https://bit.ly/game-hub-html" target="_blank">bit.ly/game-hub-html</a>, <span class="green-text">which is my friend's Game Hub</span></h4>
+    </header>
+    <main>
+        <button class="play-btn" onclick="playPixelSpeedrun()">Pixel Speedrun</button>
+        <button class="play-btn" onclick="playCookieClicker()">Cookie Clicker</button>
+        <button class="play-btn" onclick="playDriftBoss()">Drift Boss</button>
+        <button class="play-btn" onclick="playRetroBowl()">Retro Bowl</button>
+    </main>
+    <footer>
+        <p>&copy; 2025 Game Hub. All rights reserved.</p>
+    </footer>
+    <script>
+        // Function to play Pixel Speedrun in fullscreen
+        function playPixelSpeedrun() {
+            const iframe = document.createElement('iframe');
+            iframe.id = 'game-iframe';
+            iframe.src = 'https://monkeymartunblocked.click/pixelspeedrun';
+            iframe.title = 'Pixel Speedrun';
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+            iframe.style.border = 'none';
+            document.body.appendChild(iframe);
+            iframe.requestFullscreen().catch(err => {
+                alert(`Error attempting to enable fullscreen mode: ${err.message} (${err.name})`);
+            });
+
+            iframe.onload = function() {
+                loadGameState('pixelSpeedrun', iframe);
+            };
+
+            window.addEventListener('message', function(event) {
+                if (event.data.type === 'save' && event.data.game === 'pixelSpeedrun') {
+                    localStorage.setItem('pixelSpeedrunState', event.data.state);
+                }
+            });
+
+            setInterval(function() {
+                iframe.contentWindow.postMessage({ type: 'requestSave', game: 'pixelSpeedrun' }, '*');
+            }, 1000); // Save every second
+
+            document.addEventListener('keydown', handleEscapeKey);
+            document.addEventListener('fullscreenchange', handleFullscreenChange);
+        }
+
+        // Function to play Cookie Clicker in fullscreen
+        function playCookieClicker() {
+            const iframe = document.createElement('iframe');
+            iframe.id = 'game-iframe';
+            iframe.src = 'https://carter-is-black.glitch.me/';
+            iframe.title = 'Cookie Clicker';
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+            iframe.style.border = 'none';
+            document.body.appendChild(iframe);
+            iframe.requestFullscreen().catch(err => {
+                alert(`Error attempting to enable fullscreen mode: ${err.message} (${err.name})`);
+            });
+
+            iframe.onload = function() {
+                loadGameState('cookieClicker', iframe);
+            };
+
+            window.addEventListener('message', function(event) {
+                if (event.data.type === 'save' && event.data.game === 'cookieClicker') {
+                    localStorage.setItem('cookieClickerState', event.data.state);
+                }
+            });
+
+            setInterval(function() {
+                iframe.contentWindow.postMessage({ type: 'requestSave', game: 'cookieClicker' }, '*');
+            }, 1000); // Save every second
+
+            document.addEventListener('keydown', handleEscapeKey);
+            document.addEventListener('fullscreenchange', handleFullscreenChange);
+        }
+
+        // Function to play Drift Boss in fullscreen
+        function playDriftBoss() {
+            const iframe = document.createElement('iframe');
+            iframe.id = 'game-iframe';
+            iframe.src = 'https://html.cafe/xe64d47a4';
+            iframe.title = 'Drift Boss';
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+            iframe.style.border = 'none';
+            document.body.appendChild(iframe);
+            iframe.requestFullscreen().catch(err => {
+                alert(`Error attempting to enable fullscreen mode: ${err.message} (${err.name})`);
+            });
+
+            iframe.onload = function() {
+                loadGameState('driftBoss', iframe);
+            };
+
+            window.addEventListener('message', function(event) {
+                if (event.data.type === 'save' && event.data.game === 'driftBoss') {
+                    localStorage.setItem('driftBossState', event.data.state);
+                }
+            });
+
+            setInterval(function() {
+                iframe.contentWindow.postMessage({ type: 'requestSave', game: 'driftBoss' }, '*');
+            }, 1000); // Save every second
+
+            document.addEventListener('keydown', handleEscapeKey);
+            document.addEventListener('fullscreenchange', handleFullscreenChange);
+        }
+
+        // Function to play Retro Bowl in fullscreen
+        function playRetroBowl() {
+            const iframe = document.createElement('iframe');
+            iframe.id = 'game-iframe';
+            iframe.src = 'https://html.cafe/xea8f9603';
+            iframe.title = 'Retro Bowl';
+            iframe.style.width = '100%';
+            iframe.style.height = '100%';
+            iframe.style.border = 'none';
+            document.body.appendChild(iframe);
+            iframe.requestFullscreen().catch(err => {
+                alert(`Error attempting to enable fullscreen mode: ${err.message} (${err.name})`);
+            });
+
+            iframe.onload = function() {
+                loadGameState('retroBowl', iframe);
+            };
+
+            window.addEventListener('message', function(event) {
+                if (event.data.type === 'save' && event.data.game === 'retroBowl') {
+                    localStorage.setItem('retroBowlState', event.data.state);
+                }
+            });
+
+            setInterval(function() {
+                iframe.contentWindow.postMessage({ type: 'requestSave', game: 'retroBowl' }, '*');
+            }, 1000); // Save every second
+
+            document.addEventListener('keydown', handleEscapeKey);
+            document.addEventListener('fullscreenchange', handleFullscreenChange);
+        }
+
+        // Function to handle Escape key press
+        function handleEscapeKey(event) {
+            if (event.key === 'Escape') {
+                closeIframe();
+            }
+        }
+
+        // Function to handle fullscreen change
+        function handleFullscreenChange() {
+            if (!document.fullscreenElement) {
+                closeIframe();
+            }
+        }
+
+        // Function to close the iframe
+        function closeIframe() {
+            const iframe = document.getElementById('game-iframe');
+            if (iframe) {
+                document.body.removeChild(iframe);
+            }
+            document.removeEventListener('keydown', handleEscapeKey);
+            document.removeEventListener('fullscreenchange', handleFullscreenChange);
+        }
+
+        // Function to load game state
+        function loadGameState(game, iframe) {
+            const savedState = localStorage.getItem(game + 'State');
+            if (savedState) {
+                iframe.contentWindow.postMessage({ type: 'load', game: game, state: savedState }, '*');
+            }
+        }
+    </script>
+</body>
+</html>
